@@ -18,29 +18,38 @@
     <script type="text/javascript" src={% static 'speechRecog/jquery.min.js' %}></script>
     <script type="text/javascript" src={% static 'speechRecog/speechRecognition.js' %}></script>
     {% csrf_token %}
-    {% for n in news %}
-        <div class="container news-container clearfix" id="news-container">
-            <button class="newsbutton" onclick=speakNews{{ n.id }}()>
-                <img class="newsimg" src={{ n.imagelink }}>
-                <br>
-                <p class="text-center">
-                    <b> {{ n.heading }} </b>
-                </p>
-                <p class="text-center">{{ n.time }}
-                    &ensp;
-                    <i>
-                        <a target="_blank" href={{ n.newslink }}>-{{ n.papername }}</a>
-                    </i>
-                </p>
-            </button>
-            <button class="newsbutton detailbutton" onclick=speakDetails{{ n.id }}()> বিস্তারিত </button>
-        </div>
+    <div style="position: absolute">
+        {% for n in news %}
+            <div class="container news-container clearfix">
+                <button class="newsbutton" onclick=speakNews{{ n.id }}()>
+                    <img class="newsimg" src={{ n.imagelink }}>
+                    <br>
+                    <p class="text-center">
+                        <b> {{ n.heading }} </b>
+                    </p>
+                    <p class="text-center">{{ n.time }}
+                        &ensp;
+                        <i>
+                            <a target="_blank" href={{ n.newslink }}>-{{ n.papername }}</a>
+                        </i>
+                    </p>
+                </button>
+                <button class="newsbutton detailbutton" onclick=speakDetails{{ n.id }}()> বিস্তারিত</button>
+            </div>
+            <script>
+                var isSpeaking = false;
 
-        <script>
-            function speakDetails{{ n.id }}() {
-                text = "{{ n.details }}";
-                responsiveVoice.speak(text, "Bangla Bangladesh Male", {pitch: 1}, {rate: 0.75}, {volume: 1.4});
-            }
-        </script>
-    {% endfor %}
+                function speakDetails{{ n.id }}() {
+                    if (!isSpeaking) {
+                        text = "{{ n.details }}";
+                        responsiveVoice.speak(text, "Bangla Bangladesh Male", {pitch: 1}, {volume: 1.4});
+                        isSpeaking = true;
+                    } else if (isSpeaking) {
+                        responsiveVoice.cancel();
+                        isSpeaking = false;
+                    }
+                }
+            </script>
+        {% endfor %}
+    </div>
 </div>

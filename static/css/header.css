@@ -38,7 +38,7 @@ a.navoption {
 #particles-js {
     height: 100%;
     width: 100%;
-    background: transparent;
+    background: transparent no-repeat fixed;
     z-index: -1;
 }
 
@@ -50,7 +50,7 @@ a.navoption {
 }
 
 body{
-    background-image: url("../bg.jpg");
+    background-color: #243B55;
     background-repeat: no-repeat;
     background-size: cover;
     z-index: -2;

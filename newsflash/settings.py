@@ -1,4 +1,5 @@
 import os
+import django_heroku
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -55,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'newsflash.urls'
@@ -171,3 +173,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())

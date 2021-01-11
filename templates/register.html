@@ -6,7 +6,7 @@
     <link rel="stylesheet" type="text/css" href={% static 'css/animsition.min.css' %}>
     <link rel="stylesheet" type="text/css" href={% static 'css/login.css' %}>
     <!--Register-->
-    <div class="container py-5 wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="margin-top: 5%">
+    <div class="container py-5 wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54" style="margin-top: 5%; margin-left: 35%; position: absolute">
         <h2 class="register-h2"> Sign Up </h2>
         <form method="POST">
             {% csrf_token %}
@@ -60,5 +60,7 @@
         </p>
     </div>
     <script src={% static 'js/login.js' %}></script>
+    <script src={% static 'js/particles.js' %}></script>
+    <script src={% static 'js/app.js' %}></script>
 
 {% endblock %}
