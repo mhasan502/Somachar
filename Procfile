@@ -1,0 +1,1 @@
+web: gunicorn newsflash.wsgi:application --log-file -
