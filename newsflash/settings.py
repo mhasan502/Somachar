@@ -158,7 +158,7 @@ STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    os.path.join(BASE_DIR,"static"),
     #'C:/Users/Mhasan/PycharmProjects/fall2020.cse327.2.4/Web/newsflash/static',
 ]
 
