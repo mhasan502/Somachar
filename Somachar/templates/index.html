@@ -1,0 +1,25 @@
+{% include 'header.html' %}
+{% load static %}
+<link rel="stylesheet" type="text/css" href={% static 'css/news.css' %}>
+<body style="overflow: hidden">
+<div class="alert alert-primary text-center" role="alert"
+     style="margin-top: 10%;position: absolute; background-color: transparent; border-color: transparent; width: 100%">
+
+    <button class="btn mainbutton" id="capture" value="true">
+        বলুন
+    </button>
+
+    <p style="color:yellow">
+        <span>Status: </span>
+        <span id="status">Idle</span>
+        <br><br>
+    <h1 id="output" rows=10 placeholder="result" style="color: #FFFFFF"></h1>
+    </p>
+
+    <script type="text/javascript" src={% static 'speechRecog/jquery-modified.min.js' %}></script>
+    <script type="text/javascript" src={% static 'speechRecog/speechRecognition.js' %}></script>
+    <script src={% static 'js/particles.js' %}></script>
+    <script src={% static 'js/app.js' %}></script>
+
+</div>
+</body>
