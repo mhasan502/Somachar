@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -109,6 +110,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
+if sys.argv[1] != 'runserver':
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
