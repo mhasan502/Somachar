@@ -21,9 +21,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'user_access.apps.UserAccessConfig',
-    'speech.apps.SpeechConfig',
     'news.apps.NewsConfig',
+    'user_access.apps.UserAccessConfig',
 
     'allauth',
     'allauth.account',
@@ -31,6 +30,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.google',
     'bootstrap4',
     'crispy_forms',
+    'crispy_bootstrap4',
     'rest_framework',
     'rest_framework.authtoken',
 ]
@@ -155,3 +155,6 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
+
+# Crispy Form template pack
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

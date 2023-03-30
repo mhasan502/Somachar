@@ -1,11 +1,15 @@
 from django.urls import path
 import threading
-from news.task import scrapeThreading
-from news.api import NewsList, AllNewsList
+from .task import scrapeThreading
+from .api import NewsList, AllNewsList
+from .views import news_view
+
 
 urlpatterns = [
     path('news', AllNewsList.as_view()),
     path('news/<searchitem>', NewsList.as_view()),
+    # News Page
+    path("news/", news_view, name='news'),
 ]
 
 # Initializing the threading of Scraping

@@ -12,20 +12,30 @@ class NewsModelTest(TestCase):
         News.objects.create(id="103", heading="tccc", details="hrthbesb")
 
     def test_heading(self):
-        h1 = News.objects.get(id=100)
-        h2 = News.objects.get(id=101)
-        self.assertEqual(h1.heading, "")
-        self.assertEqual(h2.heading, "ataae")
+        self.assertEqual(
+            News.objects.get(id=100).heading,
+            ""
+        )
+        self.assertEqual(
+            News.objects.get(id=101).heading,
+            "ataae"
+        )
 
     def test_details(self):
-        d1 = News.objects.get(id=102)
-        d2 = News.objects.get(id=103)
-        self.assertEqual(d1.details, "")
-        self.assertEqual(d2.details, "hrthbesb")
+        self.assertEqual(
+            News.objects.get(id=102).details,
+            ""
+        )
+        self.assertEqual(
+            News.objects.get(id=103).details,
+            "hrthbesb"
+        )
 
     def test_count(self):
-        count = News.objects.count()
-        self.assertEqual(count, 4)
+        self.assertEqual(
+            News.objects.count(),
+            4
+        )
 
     @unittest.expectedFailure
     def test_unique(self):

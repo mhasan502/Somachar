@@ -10,21 +10,31 @@ class UserModelTest(TestCase):
         User.objects.create(username="rrrr", password="hello", is_superuser=True)
 
     def test_username(self):
-        u1 = User.objects.get(username="abaa")
-        self.assertEqual(u1.username, "abaa")
+        self.assertEqual(
+            User.objects.get(username="abaa").username,
+            "abaa"
+        )
 
     def test_superuser(self):
-        u1 = User.objects.get(username="abaa")
-        u2 = User.objects.get(username="rrrr")
-        self.assertEqual(u1.is_superuser, False)
-        self.assertEqual(u2.is_superuser, True)
+        self.assertEqual(
+            User.objects.get(username="abaa").is_superuser,
+            False
+        )
+        self.assertEqual(
+            User.objects.get(username="rrrr").is_superuser,
+            True
+        )
 
     def test_staff(self):
-        u1 = User.objects.get(username="abaa")
-        u2 = User.objects.get(username="rrrr")
-        self.assertEqual(u1.is_staff, True)
-        self.assertEqual(u2.is_staff, False)
+        self.assertEqual(
+            User.objects.get(username="abaa").is_staff,
+            True
+        )
+        self.assertEqual(
+            User.objects.get(username="rrrr").is_staff,
+            False
+        )
 
     @unittest.expectedFailure
     def test_without_password(self):
-        u = User.objects.create(username="abaa")
+        User.objects.create(username="abaa")

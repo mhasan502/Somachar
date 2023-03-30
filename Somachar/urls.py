@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
 from rest_framework.authtoken.views import obtain_auth_token
-from speech import views as SpeechView
 
 
 urlpatterns = [
@@ -12,8 +11,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     # User functionality
     path('', include('user_access.urls')),
-    # News Page
-    path("news/", SpeechView.newsView, name='news'),
     # Api Urls
     path('api/', include('news.urls'), name='News'),
     # Token Generate
