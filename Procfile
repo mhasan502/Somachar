@@ -1,1 +1,1 @@
-web: gunicorn newsflash.wsgi:application --log-file -
+web: gunicorn Somachar.wsgi:application --log-file -
