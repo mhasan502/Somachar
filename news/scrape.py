@@ -63,7 +63,7 @@ def jugantor():
                                        {'class': 'IfTxty news-element-text text-justify my-2 pr-md-4 text-break'}):
                     desc = i.getText().replace("\n", "")
 
-                #saveToDB(head, imageLink, newsLink, desc, name)
+                saveToDB(head, imageLink, newsLink, desc, name)
             else:
                 break
         except Exception:
@@ -131,7 +131,7 @@ def ittefaq():
                 for i in body.find_all('p'):
                     desc += i.getText().replace("\n", "")
 
-                #saveToDB(head, imageLink, newsLink, desc, name)
+                saveToDB(head, imageLink, newsLink, desc, name)
             else:
                 break
         except Exception:
