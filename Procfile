@@ -1,1 +1,0 @@
-web: gunicorn Somachar.wsgi:application --log-file -

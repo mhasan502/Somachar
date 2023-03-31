@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 from django.contrib.messages import constants as messages
 
@@ -110,7 +109,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "templates/static_files")
+STATIC_ROOT = BASE_DIR / 'templates/static'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
