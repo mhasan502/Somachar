@@ -1,6 +1,6 @@
-# fly.toml file generated for quiet-sunset-3457 on 2023-03-31T14:51:18+06:00
+# fly.toml file generated for somachar on 2023-04-01T15:09:41+06:00
 
-app = "quiet-sunset-3457"
+app = "somachar"
 kill_signal = "SIGINT"
 kill_timeout = 5
 mounts = []

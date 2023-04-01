@@ -1,23 +1,26 @@
 from django.contrib import admin
-from django.urls import path, include
-from django.views.generic import TemplateView
-from rest_framework.authtoken.views import obtain_auth_token
+from django.urls import include, re_path
+from .views import IndexView
 
+# Social Login Urls
+social_auth_patterns = ([
+    re_path(r'^accounts/', include('allauth.urls')),
+    re_path(r'^accounts/', include('django.contrib.auth.urls')),
+])
+
+# Admin Urls
+admin_pattern = ([
+    re_path(r'^admin/', admin.site.urls),
+])
 
 urlpatterns = [
-    # Home Page
-    path('', TemplateView.as_view(template_name="index.html"), name="Index"),
-    # Admin Access Page
-    path('admin/', admin.site.urls),
-    # User functionality
-    path('', include('user_access.urls')),
-    # Api Urls
-    path('api/', include('news.urls'), name='News'),
-    # Token Generate
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    re_path(r'^$', IndexView, name="Index"),
 
-    # Others
-    path('accounts/', include('allauth.urls')),
-    path('accounts/', include('django.contrib.auth.urls')),
+    # App Urls
+    re_path(r'', include('news.urls'), name='News'),
+    re_path(r'', include('user.urls')),
 
+    # Other Patterns
+    re_path(r'', include(social_auth_patterns)),
+    re_path(r'', include(admin_pattern)),
 ]

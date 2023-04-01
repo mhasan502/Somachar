@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'news.apps.NewsConfig',
-    'user_access.apps.UserAccessConfig',
+    'user.apps.UserConfig',
 
     'allauth',
     'allauth.account',

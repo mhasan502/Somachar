@@ -26,13 +26,13 @@ class NewsList(APIView):
     permission_classes = [AllowAny]
 
     # Getting queryset and returning news
-    def get(self, requests, searchitem):
+    def get(self, requests, searchitem=None):
         search = searchitem
-        if search is None or bool(search) == False:
+        if search is None or bool(search) is False:
             result = News.objects.order_by('-time')[:30]
         else:
             result = News.objects.filter(heading__icontains=search).order_by('-time')[:30]
-        serializer = newsSerializer(result, many=True)               # queryset contains multiple items
+        serializer = newsSerializer(result, many=True)  # queryset contains multiple items
         return Response(serializer.data)
 
 
@@ -42,6 +42,5 @@ class AllNewsList(APIView):
 
     # Getting queryset and returning news
     def get(self, requests):
-        result = News.objects.order_by('-time')[:30]
-        serializer = newsSerializer(result, many=True)               # queryset contains multiple items
+        serializer = newsSerializer(News.objects.order_by('-time')[:30], many=True)  # queryset contains multiple items
         return Response(serializer.data)

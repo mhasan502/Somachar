@@ -11,6 +11,8 @@ class News(models.Model):
     papername = models.CharField(max_length=100, null=False)
     time = models.DateTimeField(auto_now_add=True, null=False)
 
-    # Default string representation of its objects
+    class Meta:
+        verbose_name = 'News'
+
     def __str__(self):
         return self.heading

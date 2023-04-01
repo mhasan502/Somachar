@@ -1,4 +1,4 @@
-{% include 'header.html' %}
+{% include 'essential/header.html' %}
 {% load static %}
 <link rel="stylesheet" type="text/css" href={% static 'css/news.css' %}>
 <body style="overflow: hidden">
@@ -13,13 +13,12 @@
         <span>Status: </span>
         <span id="status">Idle</span>
         <br><br>
-    <h1 id="output" rows=10 placeholder="result" style="color: #FFFFFF"></h1>
     </p>
+    <h1 id="output" rows=10 placeholder="result" style="color: #FFFFFF"></h1>
 
     <script type="text/javascript" src={% static 'speechRecog/jquery-modified.min.js' %}></script>
     <script type="text/javascript" src={% static 'speechRecog/speechRecognition.js' %}></script>
-    <script src={% static 'js/particles.js' %}></script>
-    <script src={% static 'js/app.js' %}></script>
+    {% include 'essential/footer.html' %}
 
 </div>
 </body>
