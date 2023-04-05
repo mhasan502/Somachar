@@ -17,4 +17,4 @@ urlpatterns = [
 ]
 
 # Initializing the threading of Scraping
-threading.Thread(target=scrapeThreading, daemon=True).start()  # daemon thread runs in background
+#threading.Thread(target=scrapeThreading, daemon=True).start()  # daemon thread runs in background

@@ -2,6 +2,10 @@ from django.contrib import admin
 from django.urls import include, re_path
 from .views import IndexView
 
+# URLS ########## //TODO
+from .views import EditIndex
+# URLS ##########
+
 # Social Login Urls
 social_auth_patterns = ([
     re_path(r'^accounts/', include('allauth.urls')),
@@ -11,6 +15,12 @@ social_auth_patterns = ([
 # Admin Urls
 admin_pattern = ([
     re_path(r'^admin/', admin.site.urls),
+])
+
+
+# UI Update Urls //TODO
+ui_edit_pattern = ([
+    re_path(r'^edit/', EditIndex),
 ])
 
 urlpatterns = [
@@ -23,4 +33,8 @@ urlpatterns = [
     # Other Patterns
     re_path(r'', include(social_auth_patterns)),
     re_path(r'', include(admin_pattern)),
+
+    # UI Update Urls //TODO
+    re_path(r'', include(ui_edit_pattern)),
+
 ]
