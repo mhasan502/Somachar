@@ -8,7 +8,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-e_b^cc*+-0(19e-v!ln*etxl6n2^k+*k-4#e#3i8vnhy#&2ji2'
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['somachar.fly.dev', '127.0.0.1']
 
 
 # Application definition
@@ -57,8 +57,7 @@ ROOT_URLCONF = 'Somachar.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -109,7 +108,7 @@ STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]
 
-STATIC_ROOT = BASE_DIR / 'templates/static'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -159,3 +158,5 @@ MESSAGE_TAGS = {
 
 # Crispy Form template pack
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'https://somachar.fly.dev']

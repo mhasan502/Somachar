@@ -1,0 +1,45 @@
+{% include 'essential/messages.html' %}
+{% load static %}
+<html lang="en" data-theme="corporate">
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css"/>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title> সমাচার </title>
+    </head>
+{% endblock %}
+
+<body class="bg-[#243B55]">
+{% block navbar %}
+    <div class="navbar bg-base-100 w-11/12 h-24 rounded-lg m-auto">
+        <div class="navbar-start">
+            <div class="dropdown">
+                <label tabindex="0" class="btn btn-ghost btn-circle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/>
+                    </svg>
+                </label>
+                <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52">
+                    <li><a>Homepage</a></li>
+                    <li><a>Portfolio</a></li>
+                    <li><a>About</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="navbar-center">
+            <a href={% url 'Index' %}>
+                <img class="w-150px h-20 rounded-full" alt="সমাচার" src={% static 'logo.png' %}>
+            </a>
+        </div>
+        <div class="navbar-end">
+            <button class="btn btn-info rounded-lg">
+                Login
+            </button>
+            <button class="btn btn-info rounded-lg">
+                Sign Up
+            </button>
+        </div>
+    </div>
+{% endblock %}
