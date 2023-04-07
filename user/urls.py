@@ -15,9 +15,9 @@ password_reset_patterns = ([
 ])
 
 urlpatterns = [
-    re_path('signup/', register_view, name='Signup'),
-    re_path('login/', login_view, name='Login'),
-    re_path('logout/', logout_view, name='Logout'),
+    re_path(r'signup/', register_view, name='Signup'),
+    re_path(r'login/', login_view, name='Login'),
+    re_path(r'logout/', logout_view, name='Logout'),
 
     # User API
     re_path(r'user/(?P<username>[._A-Za-z0-9]+)/$', UserList.as_view()),

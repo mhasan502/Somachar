@@ -2,10 +2,12 @@
 {% load static %}
 <link rel="stylesheet" type="text/css" href={% static 'css/news.css' %}>
 <body style="overflow: hidden">
-<div class="alert alert-primary text-center" role="alert"
-     style="margin-top: 10%;position: absolute; background-color: transparent; border-color: transparent; width: 100%">
 
-    <button class="btn mainbutton" id="capture" value="true">
+  <div class="container py-10 px-10 mx-0 min-w-full grid place-items-center">
+
+    <button class="text-white border border-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 px-8 py-3 rounded-full duration-150"
+            type="button" id="capture" value="true">
+        <i class="fas fa-heart"></i>
         বলুন
     </button>
 

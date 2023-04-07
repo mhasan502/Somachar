@@ -1,70 +1,48 @@
 {% include 'essential/messages.html' %}
 {% load static %}
-{% load bootstrap4 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href={% static 'css/header.css' %}>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="icon" type="image/png" href={% static 'favicon/favicon.png' %}>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <title> সমাচার </title>
-</head>
-<body>
-<div id="particles-js">
-    <nav class="navbar navbar-light navbar-expand-md bg-faded justify-content-center" id="navigationbar">
-        <a class="navbar-brand d-flex w-50 mr-auto" href={% url 'Index' %}>
-            <img class="logo" alt="সমাচার" src={% static 'logo.png' %}>
-        </a>
+<html lang="en" data-theme="corporate">
+{% block head %}
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css"/>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <title> সমাচার </title>
+    </head>
+{% endblock %}
 
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="navbar-collapse collapse w-100" id="navbarSupportedContent">
-            <ul class="navbar-nav w-100 justify-content-center">
-                <li class="nav-item">
-                    <a class="nav-link navoption btn btn1" href={% url 'Index' %}>Main Page</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link navoption btn btn1" href={% url 'news' %}>Latest News</a>
-                </li>
-            </ul>
-
+<body class="bg-[#243B55]">
+{% block navbar %}
+    <br><br>
+    <div class="navbar bg-base-100 w-11/12 h-20 md:h-24 rounded-lg m-auto">
+        <div class="navbar-start">
+            <a href={% url 'Index' %}>
+                <img class="w-40 md:w-52 h-16 md:h-20 rounded-lg md:rounded-[20px]" alt="সমাচার" src={% static 'logo.png' %}>
+            </a>
+        </div>
+        <div class="navbar-end flex  space-x-1.5">
             {% if user.is_authenticated %}
-                <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link navoption btn btn1">{{ user.username.upper }}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link navoption btn btn1" onclick="logout_confirmation()">Log Out</a>
-                    </li>
-                </ul>
+                <a class="btn btn-outline rounded-lg">
+                    {{ user.username.title }}
+                </a>
+                <a class="btn btn-outline rounded-lg" href="{% url 'Logout' %}" onclick="logout_confirmation()">
+                    Logout
+                </a>
             {% else %}
-                <ul class="nav navbar-nav ml-auto w-100 justify-content-end">
-                    <li class="nav-item">
-                        <a class="nav-link navoption btn btn1" href={% url 'Login' %}>Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link navoption btn btn1" href={% url 'Signup' %}>Sign Up</a>
-                    </li>
-                </ul>
+                <a class="btn btn-outline rounded-lg" href="{% url 'Login' %}">
+                    Login
+                </a>
+                <a class="btn btn-outline rounded-lg" href="{% url 'Signup' %}">
+                    Sign Up
+                </a>
             {% endif %}
         </div>
-    </nav>
+    </div>
+{% endblock %}
 
-    <script>
-        function logout_confirmation() {
-            let logout = confirm("Are you sure to log out?");
-            if (logout) {
-                window.location.href = {% url 'Logout' %};
-            } else {
-                return 0;
-            }
-        }
-    </script>
+<script>
+    function logout_confirmation() {
+        if (confirm("Are you sure to log out?"))
+            window.location.href = {% url 'Logout' %}
+    }
+</script>
