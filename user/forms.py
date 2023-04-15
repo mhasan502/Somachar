@@ -26,5 +26,12 @@ class RegistrationForm(UserCreationForm):
 
 # Login form
 class LoginForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'input100', 'placeholder': 'Type your Username'}), label=False)
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'input100', 'placeholder': 'Type your Password'}), label=False)
+    css = 'input100 bg-gray-200 border rounded-md text-x font-medium leading-6 text-gray-800 py-3 w-full pl-3 mt-2'
+    username = forms.CharField(
+        widget=forms.TextInput(
+            attrs={'class': css, 'placeholder': 'Type your Username'}
+        ), label=False)
+    password = forms.CharField(
+        widget=forms.PasswordInput(
+            attrs={'class': css, 'id': 'pass', 'placeholder': 'Type your Password'}
+        ), label=False)

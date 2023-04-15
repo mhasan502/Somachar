@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+
     'bootstrap4',
     'crispy_forms',
     'crispy_bootstrap4',
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
 ]
 
 # The ID of the current site in database
-SITE_ID = 2
+SITE_ID = 1
 
 # To Redirect User
 LOGIN_REDIRECT_URL = '/'
@@ -139,8 +140,9 @@ SOCIALACCOUNT_PROVIDERS = {
             'email',
         ],
         'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
+            'access_type': 'offline ',
+        },
+        'OAUTH_PKCE_ENABLED': True,
     }
 }
 

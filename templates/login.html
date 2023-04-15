@@ -2,58 +2,129 @@
 {% include 'essential/header.html' %}
 {% load crispy_forms_filters %}
 {% load static %}
-{% block content %}
-    <link rel="stylesheet" type="text/css" href={% static 'css/animsition.min.css' %}>
-    <link rel="stylesheet" type="text/css" href={% static 'css/login.css' %}>
-    <!--Login-->
-    <div class="container py-5 wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54"
-         style="margin-top: 5%; margin-left: 35%; position: absolute">
-        <h2 class="login-h2"> Login </h2>
+{#{% block content %}#}
+{#    <link rel="stylesheet" type="text/css" href={% static 'css/animsition.min.css' %}>#}
+{#    <link rel="stylesheet" type="text/css" href={% static 'css/login.css' %}>#}
+{#    <!--Login-->#}
+{#    <div class="container py-5 wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54"#}
+{#         style="margin-top: 5%; margin-left: 35%; position: absolute">#}
+{#        <h2 class="login-h2"> Login </h2>#}
+{#        <form method="POST">#}
+{#            {% csrf_token %}#}
+{#            <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">#}
+{#                {{ login_form.username|as_crispy_field }}#}
+{#            </div>#}
+{#            <div class="wrap-input100 validate-input" data-validate="Password is required">#}
+{#                {{ login_form.password|as_crispy_field }}#}
+{#            </div>#}
+{#            <div class="text-right p-t-8 p-b-31">#}
+{#                <a href={% url 'Password Reset' %}>#}
+{#                    Forgot password?#}
+{#                </a>#}
+{#            </div>#}
+{##}
+{#            <div class="container-login100-form-btn">#}
+{#                <div class="wrap-login100-form-btn">#}
+{#                    <div class="login100-form-bgbtn"></div>#}
+{#                    <button class="login100-form-btn">#}
+{#                        Login#}
+{#                    </button>#}
+{#                </div>#}
+{#            </div>#}
+{#        </form>#}
+{#        <div class="txt1 text-center p-t-54 p-b-20"#}
+{#             style="padding-bottom: 10px">#}
+{#            <span> Or Login Using </span>#}
+{#        </div>#}
+{##}
+{#        <div class="flex-c-m">#}
+{#            <a href={% provider_login_url 'google' %}>#}
+{#                <button type="button" class="google-btn">#}
+{#                    <img class="google-img" src={% static 'Google-512.png' %}>#}
+{#                    <b style="left: 5px; position: relative">Google</b>#}
+{#                </button>#}
+{#            </a>#}
+{##}
+{#        </div>#}
+{##}
+{#        <p class="text-center" style="padding-top: 10px">#}
+{#            Don't have an account?#}
+{#            <a href={% url 'Signup' %}>#}
+{#                Create an account here#}
+{#            </a>#}
+{#        </p>#}
+{#    </div>#}
+{#    {% include 'essential/footer.html' %}#}
+{#{% endblock %}#}
+
+
+<div class="flex flex-col items-center justify-center">
+
+    <div class="bg-white shadow rounded-[.625rem] lg:w-1/3  md:w-1/2 w-full p-10 mt-16">
+        <p class="text-2xl text-gray-800">Login to your account</p>
+
+        <p class="text-sm mt-4 text-gray-500">Don't have an account?
+            <a href="javascript:void(0)"
+               class="text-sm font-medium leading-none text-gray-800 cursor-pointer focus:text-gray-500 focus:outline-none focus:underline hover:text-gray-500 hover:underline">
+                Sign up here
+            </a>
+        </p>
+
+        <a aria-label="Continue with google" role="button"
+                class="py-3.5 px-4 border rounded-lg border-gray-700 flex items-center w-full mt-10 transition ease-in-out delay-150 hover:scale-110"
+        href="{% provider_login_url 'google' %}">
+            <img src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in-svg2.svg" alt="google">
+            <p class="text-base font-medium ml-4 text-gray-700">Continue with Google</p>
+        </a>
+
+        <div class="w-full flex items-center justify-between py-5">
+            <hr class="w-full bg-gray-400">
+            <p class="text-base font-medium leading-4 px-2.5 text-gray-400">OR</p>
+            <hr class="w-full bg-gray-400  ">
+        </div>
+
         <form method="POST">
             {% csrf_token %}
-            <div class="wrap-input100 validate-input m-b-23" data-validate="Username is required">
-                {{ login_form.username|as_crispy_field }}
+            <div class="w-full">
+                <label id="username" class="font-medium text-gray-800">
+                    Username
+                    {{ login_form.username }}
+                </label>
             </div>
-            <div class="wrap-input100 validate-input" data-validate="Password is required">
-                {{ login_form.password|as_crispy_field }}
+            <div class="mt-6 w-full">
+                <label for="pass" class="font-medium text-gray-800">
+                    Password
+                </label>
+                <div class="relative flex items-center justify-center">
+                    {{ login_form.password }}
+                    <a class="absolute right-0 mt-2 mr-3 cursor-pointer" onclick="ChangePasswordVisibility()">
+                        <img id="viewport" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in-svg5.svg" alt="viewport">
+                    </a>
+                </div>
             </div>
-            <div class="text-right p-t-8 p-b-31">
+            <div class="text-end  text-sm mt-2">
                 <a href={% url 'Password Reset' %}>
                     Forgot password?
                 </a>
             </div>
-
-            <div class="container-login100-form-btn">
-                <div class="wrap-login100-form-btn">
-                    <div class="login100-form-bgbtn"></div>
-                    <button class="login100-form-btn">
-                        Login
-                    </button>
-                </div>
+            <div class="mt-8">
+                <button role="button" type="submit"
+                        class="text-sm font-semibold leading-2 text-white bg-sky-700 border rounded py-4 w-full focus:outline-none hover:bg-indigo-600">
+                    Login
+                </button>
             </div>
         </form>
-        <div class="txt1 text-center p-t-54 p-b-20"
-             style="padding-bottom: 10px">
-            <span> Or Login Using </span>
-        </div>
-
-        <div class="flex-c-m">
-            <a href={% provider_login_url 'google' %}>
-                <button type="button" class="google-btn">
-                    <img class="google-img" src={% static 'Google-512.png' %}>
-                    <b style="left: 5px; position: relative">Google</b>
-                </button>
-            </a>
-
-        </div>
-
-        <p class="text-center" style="padding-top: 10px">
-            Don't have an account?
-            <a href={% url 'Signup' %}>
-                Create an account here
-            </a>
-        </p>
     </div>
-    <script src={% static 'js/login.js' %}></script>
-    {% include 'essential/footer.html' %}
-{% endblock %}
+</div>
+
+<script>
+    function ChangePasswordVisibility() {
+        let passbtn = document.getElementById("pass");
+        let marker = document.getElementById("viewport");
+        if (passbtn.type === "password") {
+            passbtn.type = "text";
+        } else {
+            passbtn.type = "password";
+        }
+    }
+</script>

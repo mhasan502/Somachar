@@ -1,4 +1,4 @@
-var SpeechResult = '';
+let SpeechResult = '';
 
 function Speech() {
     if ('webkitSpeechRecognition' in window) {
@@ -59,12 +59,12 @@ $(document).ready(function () {
 });
 
 function redirect() {
-    var url = "?search=";
-    var inputText = document.getElementById("output").value;
+    let url = "?search=";
+    let inputText = document.getElementById("output").value;
     window.location.href = url + SpeechResult;
 }
 
 function AutoRedirect() {
-    var url = "/news/?search=";
+    let url = "/news/?search=";
     window.location.href = url + SpeechResult;
 }
