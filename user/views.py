@@ -55,7 +55,7 @@ def register_view(request):
             return redirect('Index')
         messages.error(request, 'Unsuccessful registration. Invalid information.')
 
-    return render(request, 'register.html', {'register_form': register_view_form})
+    return render(request, 'signup.html', {'register_form': register_view_form})
 
 
 # Logout Functionality

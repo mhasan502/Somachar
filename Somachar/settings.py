@@ -20,19 +20,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'news.apps.NewsConfig',
-    'user.apps.UserConfig',
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
-
-    'bootstrap4',
-    'crispy_forms',
-    'crispy_bootstrap4',
     'rest_framework',
     'rest_framework.authtoken',
+
+    'news.apps.NewsConfig',
+    'user.apps.UserConfig',
 ]
 
 # The ID of the current site in database
@@ -157,8 +153,5 @@ MESSAGE_TAGS = {
     messages.WARNING: 'alert-warning',
     messages.ERROR: 'alert-danger',
 }
-
-# Crispy Form template pack
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 CSRF_TRUSTED_ORIGINS = ['http://localhost:8000', 'https://somachar.fly.dev']

@@ -2,15 +2,15 @@
 {% include 'essential/header.html' %}
 {% load static %}
 
-{% block login %}
+{% block signup %}
     <div class="flex flex-col items-center justify-center">
 
         <div class="bg-white shadow rounded-[.625rem] lg:w-1/3  md:w-1/2 w-full p-10 mt-16 mb-16">
-            <p class="text-2xl font-medium text-gray-800">Login to your account</p>
-            <p class="text-sm mt-4 text-gray-500">Don't have an account?
-                <a href="{% url 'Signup' %}"
+            <p class="text-2xl font-medium text-gray-800">Sign Up account</p>
+            <p class="text-sm mt-4 text-gray-500">Already have an account?
+                <a href="{% url 'Login' %}"
                    class="text-sm font-medium leading-none text-gray-800 cursor-pointer focus:text-gray-500 focus:outline-none focus:underline hover:text-gray-500 hover:underline">
-                    Sign up here
+                    Login here
                 </a>
             </p>
 
@@ -32,7 +32,25 @@
                 <div class="w-full">
                     <label for="username">
                         Username
-                        {{ login_form.username }}
+                        {{ register_form.username }}
+                    </label>
+                </div>
+                <div class="mt-6 w-full">
+                    <label for="first_name">
+                        First Name
+                        {{ register_form.first_name }}
+                    </label>
+                </div>
+                <div class="mt-6 w-full">
+                    <label for="last_name">
+                        Last Name
+                        {{ register_form.last_name }}
+                    </label>
+                </div>
+                <div class="mt-6 w-full">
+                    <label for="email">
+                        Email
+                        {{ register_form.email }}
                     </label>
                 </div>
                 <div class="mt-6 w-full">
@@ -40,11 +58,17 @@
                         Password
                     </label>
                     <div class="relative flex items-center justify-center">
-                        {{ login_form.password }}
+                        {{ register_form.password }}
                         <a class="absolute right-0 mt-2 mr-3 cursor-pointer" onclick="ChangePasswordVisibility()">
                             <img id="viewport" src="https://tuk-cdn.s3.amazonaws.com/can-uploader/sign_in-svg5.svg" alt="viewport">
                         </a>
                     </div>
+                </div>
+                <div class="mt-6 w-full">
+                    <label for="retype_password">
+                        Retype Password
+                        {{ register_form.retype_password }}
+                    </label>
                 </div>
                 <div class="text-end  text-sm mt-2">
                     <a href={% url 'Password Reset' %}>

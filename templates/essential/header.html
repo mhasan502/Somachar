@@ -6,8 +6,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href={% static 'favicon/favicon.png' %}>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.5/dist/full.css" rel="stylesheet" type="text/css"/>
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css"/>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
         <script src="https://cdn.tailwindcss.com"></script>
         <title> সমাচার </title>
     </head>
@@ -21,6 +21,11 @@
             <a href={% url 'Index' %}>
                 <img class="w-40 md:w-52 h-16 md:h-20 rounded-lg md:rounded-[20px]" alt="সমাচার" src={% static 'logo.png' %}>
             </a>
+        </div>
+        <div class="navbar-center">
+{#            <a class="btn btn-outline rounded-lg" href={% url 'news' %}>#}
+{#                খবর#}
+{#            </a>#}
         </div>
         <div class="navbar-end flex  space-x-1.5">
             {% if user.is_authenticated %}
