@@ -5,13 +5,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
-from django.contrib.auth.forms import PasswordResetForm
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
-from user.forms import RegistrationForm, LoginForm
+from user.forms import RegistrationForm, LoginForm, PasswordResetForm
 
 
 # Login functionality
@@ -80,10 +79,10 @@ def password_reset_request(request):
             if associated_users.exists():
                 for user in associated_users:
                     subject = 'Password Reset Requested'
-                    email_template_name = 'password/password_reset_email.txt'
+                    email_template_name = 'registration/password_reset_email.txt'
                     email_info = {
                         'email': user.email,
-                        'domain': '127.0.0.1:8000',
+                        'domain': request.META['HTTP_HOST'],
                         'site_name': 'Somachar',
                         'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                         'user': user,
@@ -97,4 +96,4 @@ def password_reset_request(request):
                         return HttpResponse('Invalid header found.')
                     return redirect('/password_reset/done/')
 
-    return render(request, 'password/password_reset.html', {'password_reset_form': password_reset_form})
+    return render(request, 'registration/password_reset.html', {'password_reset_form': password_reset_form})

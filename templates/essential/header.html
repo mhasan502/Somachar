@@ -6,9 +6,11 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/png" href={% static 'favicon/favicon.png' %}>
-        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js" type="text/javascript"></script>
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdn.tailwindcss.com"></script>
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@2.51.6/dist/full.css" rel="stylesheet" type="text/css"/>
+
         <title> সমাচার </title>
     </head>
 {% endblock %}
@@ -16,33 +18,30 @@
 <body class="bg-[#243B55]" style="font-family: 'Poppins'">
 {% block navbar %}
     <br><br>
-    <div class="navbar bg-base-100 w-11/12 h-20 md:h-24 rounded-lg m-auto">
-        <div class="navbar-start">
-            <a href={% url 'Index' %}>
-                <img class="w-40 md:w-52 h-16 md:h-20 rounded-lg md:rounded-[20px]" alt="সমাচার" src={% static 'logo.png' %}>
-            </a>
-        </div>
-        <div class="navbar-center">
-{#            <a class="btn btn-outline rounded-lg" href={% url 'news' %}>#}
-{#                খবর#}
-{#            </a>#}
-        </div>
-        <div class="navbar-end flex  space-x-1.5">
-            {% if user.is_authenticated %}
-                <a class="btn btn-outline rounded-lg">
-                    {{ user.username.title }}
+    <div>
+        <div class="navbar bg-base-100 w-11/12 h-20 md:h-24 rounded-lg m-auto">
+            <div class="navbar-start">
+                <a href={% url 'Index' %}>
+                    <img class="w-40 md:w-52 h-16 md:h-20 rounded-lg md:rounded-[20px]" alt="সমাচার" src={% static 'logo.png' %}>
                 </a>
-                <a class="btn btn-outline rounded-lg" href="{% url 'Logout' %}" onclick="logout_confirmation()">
-                    Logout
-                </a>
-            {% else %}
-                <a class="btn btn-outline rounded-lg" href="{% url 'Login' %}">
-                    Login
-                </a>
-                <a class="btn btn-outline rounded-lg" href="{% url 'Signup' %}">
-                    Sign Up
-                </a>
-            {% endif %}
+            </div>
+            <div class="navbar-end flex  space-x-1.5">
+                {% if user.is_authenticated %}
+                    <a class="btn btn-outline rounded-lg">
+                        {{ user.username.title }}
+                    </a>
+                    <a class="btn btn-outline rounded-lg" href="{% url 'Logout' %}" onclick="logout_confirmation()">
+                        Logout
+                    </a>
+                {% else %}
+                    <a class="btn btn-outline rounded-lg" href="{% url 'Login' %}">
+                        Login
+                    </a>
+                    <a class="btn btn-outline rounded-lg" href="{% url 'Signup' %}">
+                        Sign Up
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}
@@ -50,6 +49,6 @@
 <script>
     function logout_confirmation() {
         if (confirm("Are you sure to log out?"))
-            window.location.href = {% url 'Logout' %}
+            window.location.href = {% url 'Logout' %};
     }
 </script>

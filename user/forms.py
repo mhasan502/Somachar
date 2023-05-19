@@ -34,7 +34,7 @@ class RegistrationForm(UserCreationForm):
     )
     email = forms.CharField(
         required=True,
-        widget=forms.TextInput(
+        widget=forms.EmailInput(
             attrs={
                 'class': default_class,
                 'placeholder': 'Type your Email',
@@ -92,6 +92,19 @@ class LoginForm(AuthenticationForm):
                 'class': default_class,
                 'id': 'pass',
                 'placeholder': 'Type your Password',
+            }
+        ),
+    )
+
+
+# Password Reset form
+class PasswordResetForm(forms.Form):
+    email = forms.CharField(
+        required=True,
+        widget=forms.EmailInput(
+            attrs={
+                'class': default_class,
+                'placeholder': 'Type your Email',
             }
         ),
     )

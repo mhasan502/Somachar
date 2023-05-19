@@ -1,10 +1,10 @@
 {% include 'essential/header.html' %}
 {% load static %}
-<link rel="stylesheet" type="text/css" href={% static 'css/news.css' %}>
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=8LhsoKGb"></script>
-<div class="top-container text-center">
-    <br>
-    <button class="btn mainbutton" id="capture" value="true">
+
+<div class="container pt-20 px-10 mx-0 min-w-full grid place-items-center">
+    <button class="text-white text-xl border-4 border-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 px-20 py-4 rounded-full duration-150"
+            type="button" id="capture" value="true">
         বলুন
     </button>
 
@@ -12,37 +12,42 @@
         <span>Status: </span>
         <span id="status">Idle</span>
         <br><br>
-    <h1 id="output" rows=10 placeholder="result" style="color: #ffffff"></h1>
     </p>
+    <h1 id="output" style="color: #FFFFFF"></h1>
+</div>
 
-    <script type="text/javascript" src={% static 'speechRecog/jquery-modified.min.js' %}></script>
-    <script type="text/javascript" src={% static 'speechRecog/speechRecognition.js' %}></script>
-    {% csrf_token %}
-    <div style="position: absolute">
+<script type="text/javascript" src={% static 'speechRecog/speechRecognition.js' %}></script>
+
+<div class="min-h-screen flex justify-center items-center py-20">
+    <div class="md:px-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 space-y-4 md:space-y-0">
 
         {% for n in news %}
-            <div class="container news-container clearfix">
-                <button class="newsbutton" onclick=speakNews{{ n.id }}()>
-                    <img class="newsimg" src={{ n.imagelink }}>
-                    <br>
-                    <p class="text-center">
-                        <b> {{ n.heading }} </b>
-                    </p>
-                    <p class="text-center">{{ n.time|date:"h:i A, j, N, Y" }}
-                        &ensp;
-                        <i>
-                            <a target="_blank" href={{ n.newslink }}>-{{ n.papername }}</a>
-                        </i>
-                    </p>
-                </button>
-                <button class="newsbutton detailbutton" onclick=speakDetails{{ n.id }}()> বিস্তারিত</button>
+            <div class="max-w-sm bg-white px-6 pt-6 pb-2 rounded-xl shadow-lg transform hover:scale-105 transition duration-500">
+                <div class="relative">
+                    <img class="w-full rounded-xl" src="{{ n.imagelink }}" alt="{{ n.heading }}"/>
+                </div>
+                <h1 class="mt-4 text-gray-800 text-xl font-bold cursor-pointer">{{ n.heading }}</h1>
+                <div class="my-4">
+                    <div class="flex space-x-1 items-center">
+                        <span class="text-green-600">
+                            <i class="fa-regular fa-clock"></i>
+                        </span>
+                        <p class="pl-2"> {{ n.time|date:"h:i A, j, N, Y" }} </p>
+                    </div>
+                    <div class="flex space-x-1 items-center">
+                        <span class="text-green-600">
+                            <i class="fa-regular fa-newspaper"></i>
+                        </span>
+                        <p class="pl-2"> {{ n.papername }} </p>
+                    </div>
+                    <button class="mt-4 text-xl font-medium w-full text-white bg-indigo-600 py-2 rounded-md shadow-lg align-bottom" onclick="speakDetails{{ n.id }}()"> বিস্তারিত </button>
+                </div>
             </div>
             <script>
                 var isSpeaking = false;
-
                 function speakDetails{{ n.id }}() {
                     if (!isSpeaking) {
-                        text = "{{ n.details }}";
+                        let text = "{{ n.details }}";
                         responsiveVoice.speak(text, "Bangla Bangladesh Male", {pitch: 1}, {volume: 1.4});
                         isSpeaking = true;
                     } else if (isSpeaking) {
@@ -56,4 +61,3 @@
         {% endfor %}
     </div>
 </div>
-{% include 'essential/footer.html' %}

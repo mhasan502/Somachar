@@ -4,18 +4,19 @@
 <div class="container py-48 px-10 mx-0 min-w-full grid place-items-center">
     <button class="text-white text-xl border-4 border-green-500 hover:bg-green-500 hover:text-white active:bg-green-600 px-20 py-4 rounded-full duration-150"
             type="button" id="capture" value="true">
-        বলুন
+        বলুন &nbsp; <i class="fa-solid fa-microphone"></i>
     </button>
-
     <p style="color:yellow">
         <span>Status: </span>
         <span id="status">Idle</span>
         <br><br>
     </p>
-    <h1 id="output" rows=10 placeholder="result" style="color: #FFFFFF"></h1>
+    <h1 id="output" style="color: #FFFFFF"></h1>
 
-    <script type="text/javascript" src={% static 'speechRecog/jquery-modified.min.js' %}></script>
+    <a class="text-white text-xl hover:bg-green-500 hover:text-white bg-green-600 px-10 py-4 rounded-md duration-150 mt-20" href="{% url 'news' %}">
+        সর্বশেষ সংবাদ &nbsp; <i class="fa-solid fa-arrow-right fa-beat"></i>
+    </a>
+
     <script type="text/javascript" src={% static 'speechRecog/speechRecognition.js' %}></script>
     {% include 'essential/footer.html' %}
-
 </div>
