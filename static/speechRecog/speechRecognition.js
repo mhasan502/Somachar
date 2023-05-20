@@ -33,7 +33,7 @@ function Speech() {
 
 $(document).ready(function () {
     console.log('Starting SpeechRecognition library.');
-    var speech = new Speech();
+    const speech = new Speech();
 
     speech.recognition.onstart = function () {
         $('#capture').text("Stop");

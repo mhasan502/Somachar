@@ -16,8 +16,6 @@
     <h1 id="output" style="color: #FFFFFF"></h1>
 </div>
 
-<script type="text/javascript" src={% static 'speechRecog/speechRecognition.js' %}></script>
-
 <div class="min-h-screen flex justify-center items-center py-20">
     <div class="md:px-4 md:grid md:grid-cols-2 lg:grid-cols-3 gap-5 space-y-4 md:space-y-0">
 
@@ -38,7 +36,7 @@
                         <span class="text-green-600">
                             <i class="fa-regular fa-newspaper"></i>
                         </span>
-                        <p class="pl-2"> {{ n.papername }} </p>
+                        <a class="pl-2" href="{{ n.newslink }}" target="_blank"> {{ n.papername }} </a>
                     </div>
                     <button class="mt-4 text-xl font-medium w-full text-white bg-indigo-600 py-2 rounded-md shadow-lg align-bottom" onclick="speakDetails{{ n.id }}()"> বিস্তারিত </button>
                 </div>
@@ -48,7 +46,7 @@
                 function speakDetails{{ n.id }}() {
                     if (!isSpeaking) {
                         let text = "{{ n.details }}";
-                        responsiveVoice.speak(text, "Bangla Bangladesh Male", {pitch: 1}, {volume: 1.4});
+                        responsiveVoice.speak(text, "Bangla India Male", {pitch: 1}, {volume: 1.4});
                         isSpeaking = true;
                     } else if (isSpeaking) {
                         responsiveVoice.cancel();

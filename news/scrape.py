@@ -107,7 +107,7 @@ def samakal():
 # web scraping Ittefaq
 def ittefaq():
     name = 'Ittefaq'
-    url = 'https://www.ittefaq.com.bd/all-news'
+    url = 'https://www.ittefaq.com.bd/latest-news'
 
     findClass = 'a', {'class': None}
     links = collectLinks(mainNewsPage(url), findClass, name)

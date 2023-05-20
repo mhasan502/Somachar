@@ -108,3 +108,27 @@ class PasswordResetForm(forms.Form):
             }
         ),
     )
+
+
+# Password Reset Confirm form
+class PasswordResetConfirmForm(forms.Form):
+    password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': default_class,
+                'id': 'id_new_password1',
+                'placeholder': 'Type your Password',
+            }
+        ),
+    )
+    password2 = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(
+            attrs={
+                'class': default_class,
+                'id': 'id_new_password2',
+                'placeholder': 'Retype your Password',
+            }
+        ),
+    )
