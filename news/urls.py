@@ -1,6 +1,6 @@
 import threading
 from django.urls import path, include
-from .api import NewsList, AllNewsList
+from .api import NewsList, AllNewsList, NewsDetails
 from .task import scrapeThreading
 from .views import NewsView
 
@@ -8,6 +8,7 @@ from .views import NewsView
 api_patterns = ([
     path('news/', AllNewsList.as_view()),
     path('news/<str:searchitem>', NewsList.as_view()),
+    path('news/details/<int:news_id>/', NewsDetails.as_view()),
 ])
 
 urlpatterns = [

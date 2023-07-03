@@ -38,24 +38,33 @@
                         </span>
                         <a class="pl-2" href="{{ n.newslink }}" target="_blank"> {{ n.papername }} </a>
                     </div>
-                    <button class="mt-4 text-xl font-medium w-full text-white bg-indigo-600 py-2 rounded-md shadow-lg align-bottom" onclick="speakDetails{{ n.id }}()"> বিস্তারিত </button>
+                    <button class="mt-4 text-xl font-medium w-full text-white bg-indigo-600 py-2 rounded-md shadow-lg align-bottom"
+                            onclick="speakDetails({{ n.id }})"> বিস্তারিত
+                    </button>
                 </div>
             </div>
-            <script>
-                var isSpeaking = false;
-                function speakDetails{{ n.id }}() {
-                    if (!isSpeaking) {
-                        let text = "{{ n.details }}";
-                        responsiveVoice.speak(text, "Bangla India Male", {pitch: 1}, {volume: 1.4});
-                        isSpeaking = true;
-                    } else if (isSpeaking) {
-                        responsiveVoice.cancel();
-                        isSpeaking = false;
-                    }
-                }
-            </script>
         {% empty %}
             <h1 class="text-center" style="color: #ffffff">দুঃখিত। কোনো ফলাফল পাওয়া যায়নি</h1>
         {% endfor %}
     </div>
+    <script>
+        let isSpeaking = false;
+
+        async function speakDetails(news_id) {
+            const data = await fetch(`/api/news/details/${news_id}/`)
+                .then(response => response.json())
+                .then(data => {
+                    return data[0]['details'];
+                });
+
+            if (!isSpeaking) {
+                await responsiveVoice.speak(data, "Bangla India Male", {pitch: 1}, {volume: 1.4});
+                isSpeaking = true;
+            } else if (isSpeaking) {
+                responsiveVoice.cancel();
+                isSpeaking = false;
+            }
+        }
+
+    </script>
 </div>
