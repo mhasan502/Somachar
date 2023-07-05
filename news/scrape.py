@@ -6,64 +6,64 @@ from news.models import News
 
 
 # checking if that news link exists on database
-def checkIfExist(newsLink):
-    numOfNews = News.objects.filter(newslink=newsLink).count()
-    return numOfNews
+def CheckIfExist(news_link):
+    num_of_news = News.objects.filter(newslink=news_link).count()
+    return num_of_news
 
 
 # Main news page to bring more news
-def mainNewsPage(url):
+def FirstRequest(url):
     res = requests.get(url)
     return BeautifulSoup(res.text, 'html.parser')
 
 
 # collect news links
-def collectLinks(soup, findClass, name):
-    listOfLink = []
-    for findLink in soup.find_all(findClass):
+def CollectLinks(soup, find_class, name):
+    list_of_link = []
+    for findLink in soup.find_all(find_class):
         link = findLink.get('href')
         if len(str(link)) >= 45 and name.lower() in link:
-            listOfLink.append(link)
-    links = list(dict.fromkeys(listOfLink))  # remove same link
+            list_of_link.append(link)
+    links = list(dict.fromkeys(list_of_link))  # remove same link
     links.reverse()
     return links
 
 
 # save to database
-def saveToDB(head, imageLink, newsLink, desc, name):
+def SaveToDB(head, image_link, news_link, desc, name):
     if desc != '' and len(head) < 90:
-        news = News(heading=head, imagelink=imageLink, newslink=newsLink, details=desc, papername=name)
+        news = News(heading=head, imagelink=image_link, newslink=news_link, details=desc, papername=name)
         news.save()
 
 
 # web scraping Jugantor
-def jugantor():
+def Jugantor():
     name = 'Jugantor'
     url = 'https://www.jugantor.com/all-news'
 
-    findClass = 'a', {'class': 'text-decoration-none'}
-    soup = mainNewsPage(url)
-    links = collectLinks(soup, findClass, name)
+    find_class = 'a', {'class': 'text-decoration-none'}
+    soup = FirstRequest(url)
+    links = CollectLinks(soup, find_class, name)
 
     while len(links) > 0:
-        newsLink = links.pop()
+        news_link = links.pop()
         try:
-            if checkIfExist(newsLink) == 0:
-                news_url = requests.get(newsLink)
+            if CheckIfExist(news_link) == 0:
+                news_url = requests.get(news_link)
                 soup = BeautifulSoup(news_url.text, 'html.parser')
 
-                headdiv = soup.find('h3', {'class': 'font-weight-bolder'})
-                head = headdiv.getText()
+                head_div = soup.find('h3', {'class': 'font-weight-bolder'})
+                head = head_div.getText()
 
-                imagediv = soup.find('img', {'class': 'figure-img img-fluid rounded-0'})
-                imageLink = imagediv.get('src')
+                image_div = soup.find('img', {'class': 'figure-img img-fluid rounded-0'})
+                image_link = image_div.get('src')
 
                 desc = ''
                 for i in soup.find_all('div',
                                        {'class': 'IfTxty news-element-text text-justify my-2 pr-md-4 text-break'}):
                     desc = i.getText().replace("\n", "")
 
-                saveToDB(head, imageLink, newsLink, desc, name)
+                SaveToDB(head, image_link, news_link, desc, name)
             else:
                 break
         except Exception:
@@ -71,33 +71,33 @@ def jugantor():
 
 
 # web scraping Samakal
-def samakal():
+def Samakal():
     name = 'Samakal'
     url = 'https://samakal.com/list/all'
 
-    findClass = 'a', {'class': 'link-overlay'}
-    links = collectLinks(mainNewsPage(url), findClass, name)
+    find_class = 'a', {'class': 'link-overlay'}
+    links = CollectLinks(FirstRequest(url), find_class, name)
 
     while len(links) > 0:
-        newsLink = links.pop()
+        news_link = links.pop()
         try:
-            if checkIfExist(newsLink) == 0:
-                news_url = requests.get(newsLink)
+            if CheckIfExist(news_link) == 0:
+                news_url = requests.get(news_link)
                 soup = BeautifulSoup(news_url.text, 'html.parser')
 
-                headdiv = soup.find('h1', {'class': 'detail-headline'})
-                head = headdiv.getText()
+                head_div = soup.find('h1', {'class': 'detail-headline'})
+                head = head_div.getText()
 
-                imagediv = soup.find('div', {'class': 'lightgallery'})
-                image = imagediv.find('img', {'class': 'img-responsive'})
-                imageLink = image.get('src')
+                image_div = soup.find('div', {'class': 'lightgallery'})
+                image = image_div.find('img', {'class': 'img-responsive'})
+                image_link = image.get('src')
 
                 desc = ''
                 body = soup.find('div', {'class': 'description'})
                 for i in body.find_all('span'):
                     desc += i.getText().replace("\n", "")
 
-                saveToDB(head, imageLink, newsLink, desc, name)
+                SaveToDB(head, image_link, news_link, desc, name)
             else:
                 break
         except Exception:
@@ -105,33 +105,33 @@ def samakal():
 
 
 # web scraping Ittefaq
-def ittefaq():
+def Ittefaq():
     name = 'Ittefaq'
     url = 'https://www.ittefaq.com.bd/latest-news'
 
-    findClass = 'a', {'class': None}
-    links = collectLinks(mainNewsPage(url), findClass, name)
+    find_class = 'a', {'class': None}
+    links = CollectLinks(FirstRequest(url), find_class, name)
 
     while len(links) > 0:
-        newsLink = links.pop()
+        news_link = links.pop()
         try:
-            if checkIfExist(newsLink) == 0:
-                news_url = requests.get(newsLink)
+            if CheckIfExist(news_link) == 0:
+                news_url = requests.get(news_link)
                 soup = BeautifulSoup(news_url.text, 'html.parser')
 
-                headdiv = soup.find('div', {'id': 'dtl_hl_block'})
-                head = headdiv.getText()
+                head_div = soup.find('div', {'id': 'dtl_hl_block'})
+                head = head_div.getText()
 
-                imagediv = soup.find('div', {'id': 'dtl_img_block'})
-                image = imagediv.find('img')
-                imageLink = "https://www.ittefaq.com.bd" + image.get('src')
+                image_div = soup.find('div', {'id': 'dtl_img_block'})
+                image = image_div.find('img')
+                image_link = "https://www.ittefaq.com.bd" + image.get('src')
 
                 desc = ''
                 body = soup.find('div', {'id': 'dtl_content_block'})
                 for i in body.find_all('p'):
                     desc += i.getText().replace("\n", "")
 
-                saveToDB(head, imageLink, newsLink, desc, name)
+                SaveToDB(head, image_link, news_link, desc, name)
             else:
                 break
         except Exception:
@@ -143,9 +143,9 @@ def Scrape():
     start = timeit.default_timer()
 
     print("______________Initialized Scrape_________________")
-    p1 = threading.Thread(target=jugantor())
-    p2 = threading.Thread(target=samakal())
-    p3 = threading.Thread(target=ittefaq())
+    p1 = threading.Thread(target=Jugantor())
+    p2 = threading.Thread(target=Samakal())
+    p3 = threading.Thread(target=Ittefaq())
 
     p1.start()
     p2.start()
