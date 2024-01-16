@@ -1,14 +1,17 @@
 import timeit
 import threading
+import traceback
+
 import requests
 from bs4 import BeautifulSoup
-from news.models import News
+#from news.models import News
 
 
 # checking if that news link exists on database
 def CheckIfExist(news_link):
-    num_of_news = News.objects.filter(newslink=news_link).count()
-    return num_of_news
+    # num_of_news = News.objects.filter(newslink=news_link).count()
+    # return num_of_news
+    return 0
 
 
 # Main news page to bring more news
@@ -31,9 +34,10 @@ def CollectLinks(soup, find_class, name):
 
 # save to database
 def SaveToDB(head, image_link, news_link, desc, name):
-    if desc != '' and len(head) < 90:
-        news = News(heading=head, imagelink=image_link, newslink=news_link, details=desc, papername=name)
-        news.save()
+    # if desc != '' and len(head) < 90:
+    #     news = News(heading=head, imagelink=image_link, newslink=news_link, details=desc, papername=name)
+    #     news.save()
+    pass
 
 
 # web scraping Jugantor
@@ -88,13 +92,13 @@ def Samakal():
                 head_div = soup.find('h1', {'class': 'detail-headline'})
                 head = head_div.getText()
 
-                image_div = soup.find('div', {'class': 'lightgallery'})
-                image = image_div.find('img', {'class': 'img-responsive'})
+                image_div = soup.find('div', {'class': 'image-container image rel-soci'})
+                image = image_div.find('img', {'class': None})
                 image_link = image.get('src')
 
                 desc = ''
                 body = soup.find('div', {'class': 'description'})
-                for i in body.find_all('span'):
+                for i in body.find_all('p'):
                     desc += i.getText().replace("\n", "")
 
                 SaveToDB(head, image_link, news_link, desc, name)
@@ -114,17 +118,21 @@ def Ittefaq():
 
     while len(links) > 0:
         news_link = links.pop()
+        if news_link[0] == '/' and news_link[1] == '/':
+            news_link = "https:" + news_link
         try:
             if CheckIfExist(news_link) == 0:
                 news_url = requests.get(news_link)
                 soup = BeautifulSoup(news_url.text, 'html.parser')
 
-                head_div = soup.find('div', {'id': 'dtl_hl_block'})
+                head_div = soup.find('h1', {'class': 'title mb10'})
                 head = head_div.getText()
 
-                image_div = soup.find('div', {'id': 'dtl_img_block'})
-                image = image_div.find('img')
+                image_div = soup.find('div', {'class': 'featured_image'})
+                print(image_div)
+                image = image_div.find('a', {'class': 'jw_media_holder media_image alignfull pop-media-holder pop-active'})
                 image_link = "https://www.ittefaq.com.bd" + image.get('src')
+                print(image_link)
 
                 desc = ''
                 body = soup.find('div', {'id': 'dtl_content_block'})
@@ -135,6 +143,7 @@ def Ittefaq():
             else:
                 break
         except Exception:
+            traceback.print_exc()
             continue
 
 
@@ -143,13 +152,17 @@ def Scrape():
     start = timeit.default_timer()
 
     print("______________Initialized Scrape_________________")
-    p1 = threading.Thread(target=Jugantor())
-    p2 = threading.Thread(target=Samakal())
+    # p1 = threading.Thread(target=Jugantor())
+    # p2 = threading.Thread(target=Samakal())
     p3 = threading.Thread(target=Ittefaq())
 
-    p1.start()
-    p2.start()
+    # p1.start()
+    # p2.start()
     p3.start()
 
     stop = timeit.default_timer()
     print('Time: ', stop - start)
+
+
+if __name__ == '__main__':
+    Scrape()
