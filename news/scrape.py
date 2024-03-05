@@ -4,14 +4,13 @@ import traceback
 
 import requests
 from bs4 import BeautifulSoup
-#from news.models import News
+from news.models import News
 
 
 # checking if that news link exists on database
 def CheckIfExist(news_link):
-    # num_of_news = News.objects.filter(newslink=news_link).count()
-    # return num_of_news
-    return 0
+    num_of_news = News.objects.filter(newslink=news_link).count()
+    return num_of_news
 
 
 # Main news page to bring more news
@@ -34,9 +33,9 @@ def CollectLinks(soup, find_class, name):
 
 # save to database
 def SaveToDB(head, image_link, news_link, desc, name):
-    # if desc != '' and len(head) < 90:
-    #     news = News(heading=head, imagelink=image_link, newslink=news_link, details=desc, papername=name)
-    #     news.save()
+    if desc != '' and len(head) < 90:
+        news = News(heading=head, imagelink=image_link, newslink=news_link, details=desc, papername=name)
+        news.save()
     pass
 
 
@@ -152,12 +151,12 @@ def Scrape():
     start = timeit.default_timer()
 
     print("______________Initialized Scrape_________________")
-    # p1 = threading.Thread(target=Jugantor())
-    # p2 = threading.Thread(target=Samakal())
+    p1 = threading.Thread(target=Jugantor())
+    p2 = threading.Thread(target=Samakal())
     p3 = threading.Thread(target=Ittefaq())
 
-    # p1.start()
-    # p2.start()
+    p1.start()
+    p2.start()
     p3.start()
 
     stop = timeit.default_timer()

@@ -1,6 +1,4 @@
-ARG PYTHON_VERSION=3.10-slim-buster
-
-FROM python:${PYTHON_VERSION}
+FROM python:3.10-alpine
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
@@ -19,7 +17,7 @@ RUN set -ex && \
 COPY . /code/
 
 RUN python manage.py makemigrations &&  \
-    python manage.py migrate &&  \
+    python manage.py migrate --run-syncdb &&  \
     python manage.py collectstatic --noinput
 
 EXPOSE 8000

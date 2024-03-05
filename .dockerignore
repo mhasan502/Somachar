@@ -1,3 +1,6 @@
 fly.toml
 .git/
+.idea/
+*.pyc
 venv/
+__pycache__/
