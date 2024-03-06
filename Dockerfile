@@ -18,8 +18,7 @@ USER appuser
 
 RUN set -ex && \
     pip install --upgrade pip && \
-    pip install -r /tmp/requirements.txt && \
-    rm -rf /root/.cache/
+    pip install -r /tmp/requirements.txt
 
 RUN python manage.py makemigrations &&  \
     python manage.py migrate --run-syncdb &&  \
