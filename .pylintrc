@@ -1,0 +1,27 @@
+[MASTER]
+ignore=tests.py
+jobs=0
+py-version = 3.10.13
+
+[Design]
+max-parents=10
+
+[FORMAT]
+max-line-length=120
+indent-string='    '
+
+[STRING]
+check-quote-consistency=yes
+
+[REPORTS]
+output-format=colorized
+logging-modules=logging
+
+
+[MESSAGES CONTROL]
+disable=
+    missing-module-docstring,
+    import-outside-toplevel,
+    too-few-public-methods,
+	no-member,
+	unused-argument

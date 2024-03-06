@@ -8,22 +8,22 @@ from news.models import News
 
 
 # checking if that news link exists on database
-def CheckIfExist(news_link):
+def check_if_exist(news_link):
     num_of_news = News.objects.filter(newslink=news_link).count()
     return num_of_news
 
 
 # Main news page to bring more news
-def FirstRequest(url):
+def first_request(url):
     res = requests.get(url)
     return BeautifulSoup(res.text, 'html.parser')
 
 
 # collect news links
-def CollectLinks(soup, find_class, name):
+def collect_links(soup, find_class, name):
     list_of_link = []
-    for findLink in soup.find_all(find_class):
-        link = findLink.get('href')
+    for find_link in soup.find_all(find_class):
+        link = find_link.get('href')
         if len(str(link)) >= 45 and name.lower() in link:
             list_of_link.append(link)
     links = list(dict.fromkeys(list_of_link))  # remove same link
@@ -32,26 +32,27 @@ def CollectLinks(soup, find_class, name):
 
 
 # save to database
-def SaveToDB(head, image_link, news_link, desc, name):
+def save_to_db(head, image_link, news_link, desc, name):
     if desc != '' and len(head) < 90:
         news = News(heading=head, imagelink=image_link, newslink=news_link, details=desc, papername=name)
         news.save()
-    pass
+    else:
+        pass
 
 
 # web scraping Jugantor
-def Jugantor():
+def jugantor():
     name = 'Jugantor'
     url = 'https://www.jugantor.com/all-news'
 
     find_class = 'a', {'class': 'text-decoration-none'}
-    soup = FirstRequest(url)
-    links = CollectLinks(soup, find_class, name)
+    soup = first_request(url)
+    links = collect_links(soup, find_class, name)
 
     while len(links) > 0:
         news_link = links.pop()
         try:
-            if CheckIfExist(news_link) == 0:
+            if check_if_exist(news_link) == 0:
                 news_url = requests.get(news_link)
                 soup = BeautifulSoup(news_url.text, 'html.parser')
 
@@ -64,9 +65,9 @@ def Jugantor():
                 desc = ''
                 for i in soup.find_all('div',
                                        {'class': 'IfTxty news-element-text text-justify my-2 pr-md-4 text-break'}):
-                    desc = i.getText().replace("\n", "")
+                    desc = i.getText().replace('\n', '')
 
-                SaveToDB(head, image_link, news_link, desc, name)
+                save_to_db(head, image_link, news_link, desc, name)
             else:
                 break
         except Exception:
@@ -74,17 +75,17 @@ def Jugantor():
 
 
 # web scraping Samakal
-def Samakal():
+def samakal():
     name = 'Samakal'
     url = 'https://samakal.com/list/all'
 
     find_class = 'a', {'class': 'link-overlay'}
-    links = CollectLinks(FirstRequest(url), find_class, name)
+    links = collect_links(first_request(url), find_class, name)
 
     while len(links) > 0:
         news_link = links.pop()
         try:
-            if CheckIfExist(news_link) == 0:
+            if check_if_exist(news_link) == 0:
                 news_url = requests.get(news_link)
                 soup = BeautifulSoup(news_url.text, 'html.parser')
 
@@ -98,9 +99,9 @@ def Samakal():
                 desc = ''
                 body = soup.find('div', {'class': 'description'})
                 for i in body.find_all('p'):
-                    desc += i.getText().replace("\n", "")
+                    desc += i.getText().replace('\n', '')
 
-                SaveToDB(head, image_link, news_link, desc, name)
+                save_to_db(head, image_link, news_link, desc, name)
             else:
                 break
         except Exception:
@@ -108,19 +109,19 @@ def Samakal():
 
 
 # web scraping Ittefaq
-def Ittefaq():
+def ittefaq():
     name = 'Ittefaq'
     url = 'https://www.ittefaq.com.bd/latest-news'
 
     find_class = 'a', {'class': None}
-    links = CollectLinks(FirstRequest(url), find_class, name)
+    links = collect_links(first_request(url), find_class, name)
 
     while len(links) > 0:
         news_link = links.pop()
         if news_link[0] == '/' and news_link[1] == '/':
-            news_link = "https:" + news_link
+            news_link = 'https:' + news_link
         try:
-            if CheckIfExist(news_link) == 0:
+            if check_if_exist(news_link) == 0:
                 news_url = requests.get(news_link)
                 soup = BeautifulSoup(news_url.text, 'html.parser')
 
@@ -129,16 +130,19 @@ def Ittefaq():
 
                 image_div = soup.find('div', {'class': 'featured_image'})
                 print(image_div)
-                image = image_div.find('a', {'class': 'jw_media_holder media_image alignfull pop-media-holder pop-active'})
-                image_link = "https://www.ittefaq.com.bd" + image.get('src')
+                image = image_div.find(
+                    'a',
+                    {'class': 'jw_media_holder media_image alignfull pop-media-holder pop-active'}
+                )
+                image_link = 'https://www.ittefaq.com.bd' + image.get('src')
                 print(image_link)
 
                 desc = ''
                 body = soup.find('div', {'id': 'dtl_content_block'})
                 for i in body.find_all('p'):
-                    desc += i.getText().replace("\n", "")
+                    desc += i.getText().replace('\n', '')
 
-                SaveToDB(head, image_link, news_link, desc, name)
+                save_to_db(head, image_link, news_link, desc, name)
             else:
                 break
         except Exception:
@@ -147,13 +151,13 @@ def Ittefaq():
 
 
 # Start scraping
-def Scrape():
+def scrape():
     start = timeit.default_timer()
 
-    print("______________Initialized Scrape_________________")
-    p1 = threading.Thread(target=Jugantor())
-    p2 = threading.Thread(target=Samakal())
-    p3 = threading.Thread(target=Ittefaq())
+    print('______________Initialized Scrape_________________')
+    p1 = threading.Thread(target=jugantor())
+    p2 = threading.Thread(target=samakal())
+    p3 = threading.Thread(target=ittefaq())
 
     p1.start()
     p2.start()
@@ -164,4 +168,4 @@ def Scrape():
 
 
 if __name__ == '__main__':
-    Scrape()
+    scrape()

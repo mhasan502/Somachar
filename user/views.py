@@ -10,21 +10,32 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
+from django.views import View
 from user.forms import RegistrationForm, LoginForm, PasswordResetForm
 
 
-# Login functionality
-def login_view(request):
-    login_view_form = None
+class LoginView(View):
+    """
+    Login View
+    """
+    def get(self, request):
+        """
+        Get Request
+        """
+        if request.user.is_authenticated:
+            return redirect('Index')
+        else:
+            login_form = LoginForm()
+            return render(request, 'login.html', {'login_form': login_form})
 
-    if request.method == 'GET' and request.user.is_authenticated is False:
-        login_view_form = LoginForm()
-
-    if request.method == 'POST' and request.user.is_authenticated is False:
-        login_view_form = LoginForm(request, data=request.POST)
-        if login_view_form.is_valid():
-            username = login_view_form.cleaned_data.get('username')
-            password = login_view_form.cleaned_data.get('password')
+    def post(self, request):
+        """
+        Post Request
+        """
+        login_form = LoginForm(request, data=request.POST)
+        if login_form.is_valid():
+            username = login_form.cleaned_data.get('username')
+            password = login_form.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -34,8 +45,7 @@ def login_view(request):
                 messages.error(request, 'Invalid username or password.')
         else:
             messages.error(request, 'Invalid username or password.')
-
-    return render(request, 'login.html', {'login_form': login_view_form})
+        return render(request, 'login.html', {'login_form': login_form})
 
 
 # Register Functionality
@@ -57,11 +67,23 @@ def register_view(request):
     return render(request, 'signup.html', {'register_form': register_view_form})
 
 
-# Logout Functionality
-@login_required
-def logout_view(request):
-    logout(request)
-    return redirect('Index')
+class LogoutView(View):
+    """
+    Logout View
+    """
+    @login_required
+    def dispatch(self, request, *args, **kwargs):
+        """
+        looks at the request and decides whether the GET or POST method of the view class should handle the request
+        """
+        return super().dispatch(request, *args, **kwargs)
+
+    def get(self, request):
+        """
+        Get Request
+        """
+        logout(request)
+        return redirect('Index')
 
 
 # Password Reset Functionality

@@ -1,13 +1,21 @@
-from django.shortcuts import render
-from news.models import News
+from django.views.generic import ListView
+from .models import News
 
 
-# Show news/searched-news to user
-def NewsView(request):
-    search = request.GET.get('search')
-    if search is None or bool(search) is False:
-        result = News.objects.order_by('-time')[:30]
-    else:
-        result = News.objects.filter(heading__icontains=search).order_by('-time')[:30]
+class NewsListView(ListView):
+    """
+    Show news/searched-news to user
+    """
+    model = News
+    paginate_by = 30
+    template_name = 'news.html'
+    context_object_name = 'news'
 
-    return render(request, 'news.html', {'news': result})
+    def get_queryset(self):
+        search = self.request.GET.get('search')
+        if search:
+            queryset = self.model.objects.filter(heading__icontains=search).order_by('-time')
+        else:
+            queryset = self.model.objects.order_by('-time')[:30]
+
+        return queryset

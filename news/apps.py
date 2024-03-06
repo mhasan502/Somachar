@@ -1,6 +1,8 @@
 from django.apps import AppConfig
 
 
-# metadata for an app
 class NewsConfig(AppConfig):
+    """
+    metadata of News app
+    """
     name = 'news'

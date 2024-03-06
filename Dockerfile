@@ -3,8 +3,8 @@ FROM python:3.10-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+USER appuser
 RUN mkdir -p /code
-
 WORKDIR /code
 
 COPY requirements.txt /tmp/requirements.txt
@@ -22,4 +22,4 @@ RUN python manage.py makemigrations &&  \
 
 EXPOSE 8000
 
-CMD ["gunicorn", "--bind", ":8000", "--workers", "2", "Somachar.wsgi"]
+CMD ["uvicorn", "--port", "8000", "Somachar.asgi:application"]

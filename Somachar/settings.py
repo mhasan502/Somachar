@@ -1,11 +1,12 @@
 from pathlib import Path
 from django.contrib.messages import constants as messages
+import decouple
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret and don't run with debug turned on in production!
-SECRET_KEY = 'django-insecure-e_b^cc*+-0(19e-v!ln*etxl6n2^k+*k-4#e#3i8vnhy#&2ji2'
+SECRET_KEY = decouple.config('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = ['somachar.fly.dev', '127.0.0.1']
@@ -103,7 +104,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / 'static',
 ]
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -132,16 +133,26 @@ AUTHENTICATION_BACKENDS = [
 # Federated login
 SOCIALACCOUNT_PROVIDERS = {
     'google': {
+        'APP': {
+            'client_id': decouple.config('GOOGLE_CLIENT_ID'),
+            'secret': decouple.config('GOOGLE_CLIENT_SECRET'),
+            'key': ''
+        },
         'SCOPE': [
             'profile',
             'email',
         ],
         'AUTH_PARAMS': {
-            'access_type': 'offline ',
+            'access_type': 'offline',
         },
         'OAUTH_PKCE_ENABLED': True,
     }
 }
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'optional'
 
 # To provide user password reset option
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -1,7 +1,7 @@
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
 from .api import UserList
-from .views import register_view, login_view, logout_view, password_reset_request
+from .views import register_view, LoginView, LogoutView, password_reset_request
 
 # Password Reset URLs
 password_reset_patterns = ([
@@ -13,8 +13,8 @@ password_reset_patterns = ([
 
 urlpatterns = [
     path('signup/', register_view, name='Signup'),
-    path('login/', login_view, name='Login'),
-    path('logout/', logout_view, name='Logout'),
+    path('login/', LoginView.as_view(), name='Login'),
+    path('logout/', LogoutView.as_view(), name='Logout'),
 
     # User API
     path('user/<username>/', UserList.as_view()),

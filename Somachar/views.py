@@ -1,5 +1,13 @@
 from django.shortcuts import render
+from django.views import View
 
 
-def IndexView(request):
-    return render(request, template_name='index.html')
+class IndexView(View):
+    """
+    Index View
+    """
+    def get(self, request):
+        """
+        Handles GET requests for the index view.
+        """
+        return render(request, template_name='index.html')

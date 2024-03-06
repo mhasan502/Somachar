@@ -14,7 +14,7 @@ admin_pattern = ([
 ])
 
 urlpatterns = [
-    path('', IndexView, name="Index"),
+    path('', IndexView.as_view(), name='Index'),
 
     # App Urls
     path(r'', include('news.urls'), name='News'),

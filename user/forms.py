@@ -2,16 +2,18 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 
-default_class = 'input100 bg-gray-200 border rounded-md text-x font-medium leading-6 text-gray-800 py-3 w-full pl-3 mt-2'
+DESIGN_CLASS = 'input100 bg-gray-200 border rounded-md text-x font-medium leading-6 text-gray-800 py-3 w-full pl-3 mt-2'
 
 
-# Register form
 class RegistrationForm(UserCreationForm):
+    """
+    Register form and its fields
+    """
     username = forms.CharField(
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'placeholder': 'Type your Username',
             }
         ),
@@ -19,7 +21,7 @@ class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'placeholder': 'Type your First Name',
             }
         ),
@@ -27,7 +29,7 @@ class RegistrationForm(UserCreationForm):
     last_name = forms.CharField(
         widget=forms.TextInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'placeholder': 'Type your Last Name',
             }
         ),
@@ -36,7 +38,7 @@ class RegistrationForm(UserCreationForm):
         required=True,
         widget=forms.EmailInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'placeholder': 'Type your Email',
             }
         ),
@@ -45,7 +47,7 @@ class RegistrationForm(UserCreationForm):
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'placeholder': 'Type your Password',
                 'id': 'pass',
             }
@@ -55,31 +57,39 @@ class RegistrationForm(UserCreationForm):
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'placeholder': 'Retype your Password',
             }
         ),
     )
 
     class Meta:
+        """
+        Meta class for Registration form
+        """
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password', 'retype_password',)
 
     def save(self, commit=True):
-        user = super(RegistrationForm, self).save(commit=False)
-        user.email = self.cleaned_data['email']
+        """
+        Save user and its fields
+        """
+        user = super().save(commit=False)
+        user.email = self.cleaned_data['email'].lower()
         if commit:
             user.save()
         return user
 
 
-# Login form
 class LoginForm(AuthenticationForm):
+    """
+    Login form and its fields
+    """
     username = forms.CharField(
         required=True,
         widget=forms.TextInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'id': 'username',
                 'placeholder': 'Type your Username',
             }
@@ -89,7 +99,7 @@ class LoginForm(AuthenticationForm):
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'id': 'pass',
                 'placeholder': 'Type your Password',
             }
@@ -97,26 +107,30 @@ class LoginForm(AuthenticationForm):
     )
 
 
-# Password Reset form
 class PasswordResetForm(forms.Form):
+    """
+    Password reset form
+    """
     email = forms.CharField(
         required=True,
         widget=forms.EmailInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'placeholder': 'Type your Email',
             }
         ),
     )
 
 
-# Password Reset Confirm form
 class PasswordResetConfirmForm(forms.Form):
+    """
+    Password reset confirm form
+    """
     password = forms.CharField(
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'id': 'id_new_password1',
                 'placeholder': 'Type your Password',
             }
@@ -126,7 +140,7 @@ class PasswordResetConfirmForm(forms.Form):
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'class': default_class,
+                'class': DESIGN_CLASS,
                 'id': 'id_new_password2',
                 'placeholder': 'Retype your Password',
             }

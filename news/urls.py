@@ -1,8 +1,8 @@
 import threading
 from django.urls import path, include
 from .api import NewsList, AllNewsList, NewsDetails
-from .task import scrapeThreading
-from .views import NewsView
+from .task import scrape_threading
+from .views import NewsListView
 
 # API URLS
 api_patterns = ([
@@ -13,9 +13,9 @@ api_patterns = ([
 
 urlpatterns = [
     # News Page
-    path('news/', NewsView, name='news'),
+    path('news/', NewsListView.as_view(), name='news'),
     path('api/', include(api_patterns)),
 ]
 
 # Initializing the threading of Scraping
-threading.Thread(target=scrapeThreading, daemon=True).start()  # daemon thread runs in background
+threading.Thread(target=scrape_threading, daemon=True).start()  # daemon thread runs in background

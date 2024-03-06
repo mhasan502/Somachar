@@ -50,16 +50,16 @@
     <script>
         let isSpeaking = false;
 
-        async function speakDetails(news_id) {
-            const data = await fetch(`/api/news/details/${news_id}/`)
+        async function speakDetails(newsId) {
+            const data = await fetch(`/api/news/details/${newsId}/`)
                 .then(response => response.json())
                 .then(data => {
                     return data[0]['details'];
                 });
 
             if (!isSpeaking) {
-                await responsiveVoice.speak(data, "Bangla India Male", {pitch: 1}, {volume: 1.4});
                 isSpeaking = true;
+                await responsiveVoice.speak(data, "Bangla India Male", {pitch: 1}, {volume: 1.4});
             } else if (isSpeaking) {
                 responsiveVoice.cancel();
                 isSpeaking = false;
