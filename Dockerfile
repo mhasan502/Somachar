@@ -3,6 +3,8 @@ FROM python:3.10-alpine
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
+RUN useradd -ms /bin/bash appuser
+
 USER appuser
 RUN mkdir -p /code
 WORKDIR /code

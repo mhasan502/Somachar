@@ -20,6 +20,3 @@ class UserList(APIView):
     def get(self, requests, username):
         serializer = UserSerializer(User.objects.filter(username=username), many=True)
         return Response(serializer.data)
-
-    def User(self):
-        pass

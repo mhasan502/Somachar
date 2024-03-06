@@ -24,4 +24,9 @@ disable=
     import-outside-toplevel,
     too-few-public-methods,
 	no-member,
-	unused-argument
+	unused-argument,
+	missing-function-docstring,
+	missing-class-docstring,
+	broad-exception-caught,
+	missing-timeout,
+	invalid-name

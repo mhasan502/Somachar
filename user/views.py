@@ -3,14 +3,15 @@ from django.http import HttpResponse
 from django.contrib import messages
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail, BadHeaderError
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.urls import reverse_lazy
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
 from django.views import View
+from django.views.generic import RedirectView
 from user.forms import RegistrationForm, LoginForm, PasswordResetForm
 
 
@@ -20,17 +21,21 @@ class LoginView(View):
     """
     def get(self, request):
         """
-        Get Request
+        Handle GET requests:
+         - Redirect authenticated users to the index page.
+         - Render the login form for unauthenticated users.
         """
         if request.user.is_authenticated:
             return redirect('Index')
-        else:
-            login_form = LoginForm()
-            return render(request, 'login.html', {'login_form': login_form})
+
+        return render(request, 'login.html', {'login_form': LoginForm()})
 
     def post(self, request):
         """
-        Post Request
+        Handle POST requests:
+         - Validate and process login form data.
+         - Authenticate the user.
+         - Redirect to the appropriate page based on login status.
         """
         login_form = LoginForm(request, data=request.POST)
         if login_form.is_valid():
@@ -41,10 +46,11 @@ class LoginView(View):
                 login(request, user)
                 messages.success(request, f'You are now logged in as {username}.')
                 return redirect('Index')
-            else:
+            if user is None:
                 messages.error(request, 'Invalid username or password.')
         else:
             messages.error(request, 'Invalid username or password.')
+
         return render(request, 'login.html', {'login_form': login_form})
 
 
@@ -67,23 +73,19 @@ def register_view(request):
     return render(request, 'signup.html', {'register_form': register_view_form})
 
 
-class LogoutView(View):
+class LogoutView(RedirectView):
     """
-    Logout View
+    Logout view using RedirectView for efficiency.
     """
-    @login_required
-    def dispatch(self, request, *args, **kwargs):
-        """
-        looks at the request and decides whether the GET or POST method of the view class should handle the request
-        """
-        return super().dispatch(request, *args, **kwargs)
+    url = reverse_lazy('Index')
 
-    def get(self, request):
+    def get(self, request, *args, **kwargs):
         """
-        Get Request
+        Handles GET requests to initiate logout and redirect to the home page.
         """
-        logout(request)
-        return redirect('Index')
+        if request.user.is_authenticated:
+            logout(request)
+        return super().get(request, *args, **kwargs)
 
 
 # Password Reset Functionality
