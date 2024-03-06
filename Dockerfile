@@ -1,7 +1,13 @@
-FROM python:3.10-alpine
+FROM python:3.10-slim
 
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV SECRET_KEY ${{ secrets.SECRET_KEY }}
+ENV GOOGLE_CLIENT_ID ${{ secrets.GOOGLE_CLIENT_ID }}
+ENV GOOGLE_CLIENT_SECRET ${{ secrets.GOOGLE_CLIENT_SECRET }}
+
+RUN useradd --create-home appuser
+USER appuser
 
 RUN mkdir -p /code
 WORKDIR /code
