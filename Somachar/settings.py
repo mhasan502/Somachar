@@ -1,15 +1,16 @@
 from pathlib import Path
 from django.contrib.messages import constants as messages
+from django.core.management.utils import get_random_secret_key
 import decouple
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: keep the secret key used in production secret and don't run with debug turned on in production!
-SECRET_KEY = decouple.config('SECRET_KEY')
+SECRET_KEY = get_random_secret_key()
 DEBUG = True
 
-ALLOWED_HOSTS = ['somachar.fly.dev', '127.0.0.1']
+ALLOWED_HOSTS = ['somachar.fly.dev', '127.0.0.1', '0.0.0.0']
 
 
 # Application definition
